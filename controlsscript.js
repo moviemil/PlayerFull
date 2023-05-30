@@ -1,3 +1,10 @@
+const playPauseButton = document.getElementById("play-pause-button");
+const rewindButton = document.getElementById("rewind-button");
+const fastForwardButton = document.getElementById("fast-forward-button");
+const downloadLink = document.getElementById("download-link");
+const settingsButton = document.getElementById("settings-button");
+const cinemaButton = document.getElementById("cinema-button");
+
 var video = document.getElementById('custom-video');
 var playPauseButton = document.getElementById('play-pause-button');
 var downloadLink = document.getElementById('download-link');
