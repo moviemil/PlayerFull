@@ -1,0 +1,121 @@
+* {
+      box-sizing: border-box;
+    }
+
+    body {
+    background-color: #000000;
+    color:#fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+
+    .video-player {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+    color:#fff;
+      margin: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+      padding-bottom: 56.25%; /* Relação de aspecto de 16:9 */
+    }
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+    color:#fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+     height: 80px;
+      background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,1) 13%, rgba(255,255,255,0) 100%);
+      padding: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      color: #fff;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .custom-controls.hidden {
+      opacity: 0;
+    }
+
+    .play-pause-button,
+    .download-button,
+    .cinema-button,
+    .rewind-button,
+    .fast-forward-button,
+    .settings-button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      margin:5px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .play-pause-button:hover,
+    .download-button:hover,
+    .cinema-button:hover,
+    .rewind-button:hover,
+    .fast-forward-button:hover,
+    .settings-button:hover {
+      opacity: 0.7;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 5px;
+      background-color: #555;
+      border-radius:10px;
+      margin: 0 10px;
+      position: relative;
+      cursor: pointer;
+      margin-bottom:10px;
+    }
+
+    .progress-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      border-radius:10px;
+      background-color: #00bfff;
+      transition: width 0.3s ease;
+    }
+
+    .fullscreen .progress-bar {
+      width: 80%;
+    }
+
+    .fullscreen .custom-controls {
+      bottom: 30px;
+    }
+
+    .hide-by-default {
+      display: none;
+    }
