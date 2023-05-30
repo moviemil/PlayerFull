@@ -10,6 +10,7 @@
   <script src="https://unpkg.com/tippy.js@6.3.3/dist/tippy.umd.min.js"></script>
 </head>
 <body>
+  
   <div id="custom-controls">
     <!-- Elementos de controle serão adicionados dinamicamente pelo JavaScript -->
   </div>
@@ -21,5 +22,17 @@
     </video>
   </div>
 
-  <script src="caminho/do/seu/script.js"></script>
-</body>
+  <script src="https://raw.githubusercontent.com/moviemil/PlayerFull/main/controls.js"></script>
+<script>// Obter o URL atual da página
+var url = window.location.href;
+
+// Verificar se o último caractere é uma barra ("/")
+if (url.slice(-1) === '/') {
+  // Remover a última barra
+  var novaUrl = url.slice(0, -1);
+  
+  // Substituir a URL sem a última barra
+  window.history.replaceState(null, '', novaUrl);
+}
+</script>
+  </body>
