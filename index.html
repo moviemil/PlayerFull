@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Player de Vídeo Personalizado</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.2/dist/esm/popper.css">
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.3/dist/tippy.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+    background-color: #000000;
+    color:#fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+
+    .video-player {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+    color:#fff;
+      margin: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+      padding-bottom: 56.25%; /* Relação de aspecto de 16:9 */
+    }
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+    color:#fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+  justify-content: center;
+  align-items: center;
+    }
+
+    .custom-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+     height: 80px;
+      background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,1) 13%, rgba(255,255,255,0) 100%);
+      padding: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      color: #fff;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .custom-controls.hidden {
+      opacity: 0;
+    }
+
+    .play-pause-button,
+    .download-button,
+    .cinema-button,
+    .rewind-button,
+    .fast-forward-button,
+    .settings-button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      margin:5px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .play-pause-button:hover,
+    .download-button:hover,
+    .cinema-button:hover,
+    .rewind-button:hover,
+    .fast-forward-button:hover,
+    .settings-button:hover {
+      opacity: 0.7;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 5px;
+      background-color: #555;
+      border-radius:10px;
+      margin: 0 10px;
+      position: relative;
+      cursor: pointer;
+      margin-bottom:10px;
+    }
+
+    .progress-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      border-radius:10px;
+      background-color: #00bfff;
+      transition: width 0.3s ease;
+    }
+
+    .fullscreen .progress-bar {
+      width: 80%;
+    }
+
+    .fullscreen .custom-controls {
+      bottom: 30px;
+    }
+
+    .hide-by-default {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+<div class="video-player">
+    <video id="custom-video"></video>
+    <div id="custom-controls" class="custom-controls">
+      <button id="play-pause-button" class="play-pause-button"><i class="fas fa-play"></i></button>
+      <button id="rewind-button" class="rewind-button hide-by-default"><i class="fas fa-undo"></i></button>
+      <button id="fast-forward-button" class="fast-forward-button hide-by-default"><i class="fas fa-redo"></i></button>
+      <div class="progress-bar">
+        <div class="progress-bar-fill"></div>
+      </div>
+      <a id="download-link" class="download-button" href="" download><i class="fas fa-download"></i></a>
+      <button id="broadcast-button" class="broadcast-button hide-by-default"><i class="fas fa-broadcast-tower"></i></button>
+      <button id="settings-button" class="settings-button hide-by-default"><i class="fas fa-cog"></i></button>
+      <button id="cinema-button" class="cinema-button"><i class="fas fa-expand"></i></button>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@popperjs/core@2.11.2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6.3.3/dist/tippy.umd.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+  var videoId = getVideoIdFromUrl();
+  if (videoId) {
+    var videoUrl = "https://www.googleapis.com/drive/v3/files/" + videoId + "?key=AIzaSyDY5_iV-9HHm2u3bYef5sZ5Kc5Jd_4we9s&alt=media";
+    var videoPlayer = document.getElementById("custom-video");
+    videoPlayer.src = videoUrl;
+    videoPlayer.load();
+    videoPlayer.play();
+    
+    var downloadButton = document.getElementById("download-link");
+    var downloadUrl = "https://www.googleapis.com/drive/v3/files/" + videoId + "?alt=media";
+    downloadButton.href = downloadUrl;
+  }
+});
+
+// Rest of the code...
+
+function getVideoIdFromUrl() {
+  var urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("id");
+}
+
+    // Resto do código JavaScript...
+  </script>
+  <script>
+    var video = document.getElementById('custom-video');
+    var playPauseButton = document.getElementById('play-pause-button');
+    var downloadLink = document.getElementById('download-link');
+    var cinemaButton = document.getElementById('cinema-button');
+    var rewindButton = document.getElementById('rewind-button');
+    var fastForwardButton = document.getElementById('fast-forward-button');
+    var settingsButton = document.getElementById('settings-button');
+    var progressBar = document.querySelector('.progress-bar');
+    var progressBarFill = document.querySelector('.progress-bar-fill');
+    var customControls = document.getElementById('custom-controls');
+    var controlsTimeout;
+    var lastTapTime = 0;
+    var tapDelay = 300; // Tempo em milissegundos para considerar um toque duplo
+
+    playPauseButton.addEventListener('click', function() {
+      if (video.paused || video.ended) {
+        video.play();
+        playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+        showControls();
+      } else {
+        video.pause();
+        playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        hideControls();
+      }
+    });
+
+    cinemaButton.addEventListener('click', function() {
+      if (document.fullscreenElement) {
+        exitFullscreen();
+      } else {
+        enterFullscreen();
+      }
+    });
+
+    rewindButton.addEventListener('click', function() {
+      video.currentTime -= 10;
+    });
+
+    fastForwardButton.addEventListener('click', function() {
+      video.currentTime += 10;
+    });
+
+    settingsButton.addEventListener('click', function() {
+      // Função a ser implementada para abrir as configurações
+    });
+
+    function enterFullscreen() {
+      var player = document.querySelector('.video-player');
+      if (player.requestFullscreen) {
+        player.requestFullscreen();
+      } else if (player.mozRequestFullScreen) {
+        player.mozRequestFullScreen();
+      } else if (player.webkitRequestFullscreen) {
+        player.webkitRequestFullscreen();
+      } else if (player.msRequestFullscreen) {
+        player.msRequestFullscreen();
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+
+    video.addEventListener('timeupdate', function() {
+      var progress = (video.currentTime / video.duration) * 100;
+      progressBarFill.style.width = progress + '%';
+    });
+
+    progressBar.addEventListener('click', function(e) {
+      var progressBarRect = progressBar.getBoundingClientRect();
+      var clickX = e.clientX - progressBarRect.left;
+      var progress = (clickX / progressBarRect.width) * video.duration;
+      video.currentTime = progress;
+    });
+
+    video.addEventListener('play', function() {
+      playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+      showControls();
+    });
+
+    video.addEventListener('pause', function() {
+      playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+      hideControls();
+    });
+
+    video.addEventListener('ended', function() {
+      playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+      hideControls();
+    });
+
+    video.addEventListener('touchstart', function() {
+      showControls();
+    });
+
+    video.addEventListener('touchend', function() {
+      hideControlsAfterTimeout();
+    });
+
+    document.addEventListener('dblclick', function(e) {
+      var tapTime = new Date().getTime();
+      if (tapTime - lastTapTime < tapDelay) {
+        var playerWidth = video.clientWidth;
+        var tapX = e.clientX - video.getBoundingClientRect().left;
+        if (tapX <= playerWidth / 2) {
+          // Toque duplo no lado esquerdo do player
+          video.currentTime -= 10;
+        } else {
+          // Toque duplo no lado direito do player
+          video.currentTime += 10;
+        }
+      }
+      lastTapTime = tapTime;
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+      if (document.fullscreenElement) {
+        customControls.classList.add('fullscreen');
+        screen.orientation.lock('landscape').catch(function() {
+          console.log('Failed to lock device orientation.');
+        });
+        rewindButton.classList.remove('hide-by-default');
+        fastForwardButton.classList.remove('hide-by-default');
+        settingsButton.classList.remove('hide-by-default');
+      } else {
+        customControls.classList.remove('fullscreen');
+        screen.orientation.unlock();
+        rewindButton.classList.add('hide-by-default');
+        fastForwardButton.classList.add('hide-by-default');
+        settingsButton.classList.add('hide-by-default');
+      }
+    });
+
+    tippy('#custom-video', {
+      content: 'Clique longo para ver informações',
+      onShow(instance) {
+        instance.popperInstance.update();
+      },
+      onHidden(instance) {
+        instance.popperInstance.update();
+      },
+      touch: ['hold', 500],
+      onTrigger(instance, event) {
+        if (event.type === 'mouseenter') {
+          instance.show();
+        } else if (event.type === 'touchstart') {
+          instance.show();
+        }
+      },
+      onHide(instance, event) {
+        if (event.type === 'mouseleave') {
+          instance.hide();
+        }
+      }
+    });
+
+    function showControls() {
+      clearTimeout(controlsTimeout);
+      customControls.classList.remove('hidden');
+    }
+
+    function hideControls() {
+      customControls.classList.add('hidden');
+    }
+
+    function hideControlsAfterTimeout() {
+      clearTimeout(controlsTimeout);
+      controlsTimeout = setTimeout(function() {
+        hideControls();
+      }, 3000);
+    }
+
+  </script>
+</body>
+</html>
